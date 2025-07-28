@@ -68,7 +68,7 @@ function ImageBackgroundRemover() {
 
         // Resize the image before sending (e.g., max width/height 1024px)
         const resizedBlob = await resizeImage(selectedImage, 1024, 1024);
-        const resizedFile = new File([resizedBlob], selectedFile.name, { type: selectedFile.type });
+        const resizedFile = new File([resizedBlob], selectedImage.name, { type: selectedImage.type });
 
         const formData = new FormData();
         formData.append('image', resizedFile); // Use the resized file

@@ -24,16 +24,55 @@ function ImageBackgroundRemover() {
     setError(null);
     setProcessedImage(null);
 
-    const formData = new FormData();
-    formData.append('image', selectedImage);
+    // Function to resize image
+        const resizeImage = (file, maxWidth, maxHeight) => {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        let width = img.width;
+                        let height = img.height;
 
-    try {
-      // Replace with your actual backend API endpoint
-      const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-const response = await fetch(`${backendUrl}/remove-background`, {
-        method: 'POST',
-        body: formData,
-      });
+                        if (width > height) {
+                            if (width > maxWidth) {
+                                height *= maxWidth / width;
+                                width = maxWidth;
+                            }
+                        } else {
+                            if (height > maxHeight) {
+                                width *= maxHeight / height;
+                                height = maxHeight;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        canvas.toBlob((blob) => {
+                            resolve(blob);
+                        }, file.type);
+                    };
+                };
+            });
+        };
+
+        // Resize the image before sending (e.g., max width/height 1024px)
+        const resizedBlob = await resizeImage(selectedFile, 1024, 1024);
+        const resizedFile = new File([resizedBlob], selectedFile.name, { type: selectedFile.type });
+
+        const formData = new FormData();
+        formData.append('image', resizedFile); // Use the resized file
+
+        const response = await fetch(`${backendUrl}/remove-background`, {
+            method: 'POST',
+            body: formData,
+        });
 
       if (!response.ok) {
         const errorData = await response.json();

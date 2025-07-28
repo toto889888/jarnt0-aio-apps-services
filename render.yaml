@@ -14,8 +14,10 @@ services:
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
     envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: my-backend
-          property: url
+      # เราจะตั้งค่า VITE_API_URL ด้วยตนเองหลังจาก deploy backend แล้ว
+      # เนื่องจาก Render แจ้งว่า 'url' ไม่ใช่ property ที่ถูกต้องใน Blueprint
+      # - key: VITE_API_URL
+      #   fromService:
+      #     type: web
+      #     name: my-backend
+      #     property: url

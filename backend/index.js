@@ -30,7 +30,7 @@ app.post('/remove-background', upload.single('image'), async (req, res) => {
         }
 
         // Call Python script to remove background
-        const pythonProcess = spawn('/home/toto8898/Desktop/all-in-one-app/venv_rembg/bin/python', [
+        const pythonProcess = spawn('python3', [
             path.join(__dirname, 'remove_bg.py'),
             imagePath,
             outputPath

@@ -1,0 +1,69 @@
+:root {
+  --primary-color: #0ea5e9;
+  --background-color: #f8fafc;
+  --text-color: #1e293b;
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #334155;
+  --sidebar-active-bg: #e0f2fe;
+  --card-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+
+  font-family: 'Noto Sans Lao', 'Inter', 'Segoe UI', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  height: 100%; /* Ensure html and body take full height */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  /* Aggressive reset for stacking context */
+  position: static !important;
+  z-index: auto !important;
+  transform: none !important;
+  filter: none !important;
+  perspective: none !important;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+#root {
+  height: 100%; /* Ensure #root takes full height */
+  /* Aggressive reset for stacking context */
+  position: static !important;
+  z-index: auto !important;
+  transform: none !important;
+  filter: none !important;
+  perspective: none !important;
+  overflow: visible !important;
+}
+
+.sidebar-heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0 0 2rem 0;
+}
+
+.feature-content {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  padding: 2.5rem;
+}
+
+/* Force Offcanvas to overlay */
+.offcanvas {
+  position: fixed !important;
+  z-index: 1050 !important; /* Higher than modals */
+}

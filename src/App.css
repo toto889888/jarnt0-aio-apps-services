@@ -1,0 +1,37 @@
+/* App.css is now largely replaced by Bootstrap. */
+/* Any remaining custom styles can be added here. */
+
+/* App.css is now largely replaced by Bootstrap. */
+/* Any remaining custom styles can be added here. */
+
+.sidebar .nav-item .nav-link:hover,
+.offcanvas-body .nav-item .nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* Very subtle light grey for hover on non-active */
+  color: #000; /* Black text on hover */
+}
+
+.sidebar .nav-item .nav-link.active,
+.offcanvas-body .nav-item .nav-link.active {
+  background-color: transparent !important; /* Make button transparent to show li background */
+  color: #fff !important; /* White text for active state */
+  font-weight: bold !important;
+}
+
+.sidebar .nav-item.active {
+  background-color: #0ea5e9 !important; /* Blue for active li background */
+  border-radius: 0.25rem; /* Slightly rounded corners for active item */
+}
+
+.sidebar .nav-item.active:hover {
+  background-color: #0284c7 !important; /* Slightly darker blue on hover for active li */
+}
+
+/* For offcanvas menu */
+.offcanvas-body .nav-item.active {
+  background-color: #0ea5e9 !important; /* Blue for active li background */
+  border-radius: 0.25rem; /* Slightly rounded corners for active item */
+}
+
+.offcanvas-body .nav-item.active:hover {
+  background-color: #0284c7 !important; /* Slightly darker blue on hover for active li */
+}

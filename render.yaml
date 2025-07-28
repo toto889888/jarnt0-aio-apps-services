@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: my-backend
+    env: node
+    buildCommand: npm install --prefix backend && pip install -r backend/requirements.txt
+    startCommand: node backend/index.js
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.13
+  - type: web
+    name: my-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: my-backend
+          property: url

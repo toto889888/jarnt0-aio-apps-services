@@ -18,7 +18,7 @@ venv_rembg/
 # Backend temporary files
 backend/uploads/
 backend/processed_images/
-backend/dummy_100mb.bin
+
 
 # Editor directories and files
 .vscode/*

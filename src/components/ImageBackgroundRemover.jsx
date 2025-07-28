@@ -24,7 +24,11 @@ function ImageBackgroundRemover() {
     setError(null);
     setProcessedImage(null);
 
-    // Function to resize image
+    try {
+
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'; // Moved inside try block
+
+        // Function to resize image
         const resizeImage = (file, maxWidth, maxHeight) => {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -63,7 +67,7 @@ function ImageBackgroundRemover() {
         };
 
         // Resize the image before sending (e.g., max width/height 1024px)
-        const resizedBlob = await resizeImage(selectedFile, 1024, 1024);
+        const resizedBlob = await resizeImage(selectedImage, 1024, 1024);
         const resizedFile = new File([resizedBlob], selectedFile.name, { type: selectedFile.type });
 
         const formData = new FormData();
@@ -74,14 +78,14 @@ function ImageBackgroundRemover() {
             body: formData,
         });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to remove background.');
-      }
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to remove background.');
+        }
 
-      const blob = await response.blob();
-      const imageUrl = URL.createObjectURL(blob);
-      setProcessedImage(imageUrl);
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        setProcessedImage(imageUrl);
     } catch (err) {
       setError(err.message);
       console.error("Error removing background:", err);

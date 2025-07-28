@@ -66,8 +66,8 @@ function ImageBackgroundRemover() {
             });
         };
 
-        // Resize the image before sending (e.g., max width/height 1024px)
-        const resizedBlob = await resizeImage(selectedImage, 1024, 1024);
+        // Resize the image before sending (e.g., max width/height 512px)
+        const resizedBlob = await resizeImage(selectedImage, 512, 512);
         const resizedFile = new File([resizedBlob], selectedImage.name, { type: selectedImage.type });
 
         const formData = new FormData();

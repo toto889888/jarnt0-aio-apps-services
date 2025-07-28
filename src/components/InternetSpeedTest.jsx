@@ -15,7 +15,7 @@ const InternetSpeedTest = () => {
     setPing(null);
     setStatus('ກຳລັງທົດສອບ...');
 
-    const backendUrl = 'http://localhost:5000'; // ตรวจสอบให้แน่ใจว่าตรงกับ port ของ backend
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'; // ใช้ Environment Variable หรือ fallback ไปที่ localhost สำหรับ dev
 
     try {
       // Ping Test

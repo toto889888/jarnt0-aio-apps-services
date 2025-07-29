@@ -144,10 +144,7 @@ function CalculatorClockAlarm() {
           registration.showNotification('⏰ Alarm', { body: `It's ${found.time}` });
         });
       }
-      // Play sound
-      if (alarmAudio.current) {
-        alarmAudio.current.play();
-      }
+      
     }
     // Reset rangToday at midnight
     if (nowStr === '00:00') {
@@ -198,10 +195,16 @@ function CalculatorClockAlarm() {
     setAlarms(alarms.filter(a => a.id !== id));
   };
   const handleStopAlarm = () => {
-    setAlarmRinging(null);
     if (alarmAudio.current) {
       alarmAudio.current.pause();
       alarmAudio.current.currentTime = 0;
+    }
+    setAlarmRinging(null);
+  };
+
+  const handleRingAlarm = () => {
+    if (alarmAudio.current) {
+      alarmAudio.current.play().catch(e => console.error("Error playing alarm:", e));
     }
   };
 
@@ -288,10 +291,10 @@ function CalculatorClockAlarm() {
             {alarmRinging && (
               <div className="alert alert-danger mt-3 text-center" data-testid="alarm-popup">
                 <div>⏰ ໂມງປຸກ! {alarmRinging.time}</div>
-                <button onClick={handleStopAlarm} className="btn btn-danger mt-2" data-testid="stop-alarm-btn">ຢຸດ</button>
+                <button onClick={() => { handleStopAlarm(); handleRingAlarm(); }} className="btn btn-danger mt-2" data-testid="stop-alarm-btn">ຢຸດ</button>
               </div>
             )}
-            <audio ref={alarmAudio} src="/public/sounds/alarm.mp3" preload="auto" />
+            <audio ref={alarmAudio} src="/sounds/alarm.mp3" preload="auto" />
           </div>
         </div>
       </div>

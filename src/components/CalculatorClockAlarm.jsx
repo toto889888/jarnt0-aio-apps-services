@@ -7,6 +7,80 @@ function formatDate(date) {
   return date.toLocaleDateString('en-CA'); // YYYY-MM-DD
 }
 
+function evaluateExpression(expression) {
+  // Basic validation: only allow numbers, +, -, *, /
+  if (!/^[0-9+\-*\/.]+$/.test(expression)) {
+    throw new Error('Invalid expression');
+  }
+
+  const operators = {
+    '+': (a, b) => a + b,
+    '-': (a, b) => a - b,
+    '*': (a, b) => a * b,
+    '/': (a, b) => {
+      if (b === 0) throw new Error('Division by zero');
+      return a / b;
+    }
+  };
+
+  const precedence = {
+    '+': 1,
+    '-': 1,
+    '*': 2,
+    '/': 2
+  };
+
+  const outputQueue = [];
+  const operatorStack = [];
+
+  const tokens = expression.match(/(\d+\.?\d*)|([+\-*\/])/g);
+
+  if (!tokens) {
+    return 0;
+  }
+
+  for (const token of tokens) {
+    if (!isNaN(parseFloat(token))) {
+      outputQueue.push(parseFloat(token));
+    } else if (operators[token]) {
+      while (
+        operatorStack.length > 0 &&
+        operators[operatorStack[operatorStack.length - 1]] &&
+        precedence[operatorStack[operatorStack.length - 1]] >= precedence[token]
+      ) {
+        outputQueue.push(operatorStack.pop());
+      }
+      operatorStack.push(token);
+    } else {
+      throw new Error('Invalid token: ' + token);
+    }
+  }
+
+  while (operatorStack.length > 0) {
+    outputQueue.push(operatorStack.pop());
+  }
+
+  const evaluationStack = [];
+  for (const token of outputQueue) {
+    if (!isNaN(token)) {
+      evaluationStack.push(token);
+    } else if (operators[token]) {
+      const b = evaluationStack.pop();
+      const a = evaluationStack.pop();
+      if (a === undefined || b === undefined) {
+        throw new Error('Invalid expression format');
+      }
+      evaluationStack.push(operators[token](a, b));
+    }
+  }
+
+  if (evaluationStack.length !== 1) {
+    throw new Error('Invalid expression format');
+  }
+
+  return evaluationStack[0];
+}
+
 const BUTTONS = [
   ['7', '8', '9', '/'],
   ['4', '5', '6', '*'],
@@ -65,8 +139,10 @@ function CalculatorClockAlarm() {
       // Mark as rang today
       setAlarms(alarms.map(a => a.id === found.id ? { ...a, rangToday: true } : a));
       // Notification
-      if (window.Notification && Notification.permission === 'granted') {
-        new Notification('⏰ Alarm', { body: `It's ${found.time}` });
+      if ('serviceWorker' in navigator && navigator.serviceWorker.ready) {
+        navigator.serviceWorker.ready.then(registration => {
+          registration.showNotification('⏰ Alarm', { body: `It's ${found.time}` });
+        });
       }
       // Play sound
       if (alarmAudio.current) {
@@ -95,7 +171,7 @@ function CalculatorClockAlarm() {
       setCalc(calc.slice(0, -1));
     } else if (val === '=') {
       try {
-        const evalResult = eval(calc).toString();
+        const evalResult = evaluateExpression(calc).toString();
         setResult(evalResult);
         setHistory([{ exp: calc, res: evalResult }, ...history].slice(0, 20));
         setCalc('');

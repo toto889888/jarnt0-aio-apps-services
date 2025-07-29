@@ -60,15 +60,17 @@ const StopwatchTimer = () => {
         timerAudioRef.current.play();
       }
       // Show notification
-      if (window.Notification && Notification.permission === 'granted') {
-        new Notification('⏰ Timer Finished!', {
-          body: 'Your timer has ended.',
-          icon: '/vite.svg', // You can use a custom icon here
+      if ('serviceWorker' in navigator && navigator.serviceWorker.ready) {
+        navigator.serviceWorker.ready.then(registration => {
+          registration.showNotification('⏰ Timer Finished!', {
+            body: 'Your timer has ended.',
+            icon: '/vite.svg',
+          });
         });
-      } else if (window.Notification && Notification.permission !== 'denied') {
-        Notification.requestPermission().then(permission => {
+      } else if ('serviceWorker' in navigator && navigator.serviceWorker.ready) {
+        navigator.serviceWorker.ready.then(registration => {
           if (permission === 'granted') {
-            new Notification('⏰ Timer Finished!', {
+            registration.showNotification('⏰ Timer Finished!', {
               body: 'Your timer has ended.',
               icon: '/vite.svg',
             });

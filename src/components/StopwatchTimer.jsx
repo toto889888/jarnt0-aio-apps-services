@@ -205,7 +205,7 @@ const StopwatchTimer = () => {
                   ຣີເຊັດ
                 </button>
               </div>
-              <audio ref={timerAudioRef} src="https://www.soundjay.com/buttons/beep-07.mp3" preload="auto" />
+              <audio ref={timerAudioRef} src="/public/sounds/timer_beep.mp3" preload="auto" />
             </div>
           </div>
         </div>

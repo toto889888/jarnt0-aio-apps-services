@@ -291,7 +291,7 @@ function CalculatorClockAlarm() {
                 <button onClick={handleStopAlarm} className="btn btn-danger mt-2" data-testid="stop-alarm-btn">ຢຸດ</button>
               </div>
             )}
-            <audio ref={alarmAudio} src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae3c7.mp3" preload="auto" />
+            <audio ref={alarmAudio} src="/public/sounds/alarm.mp3" preload="auto" />
           </div>
         </div>
       </div>

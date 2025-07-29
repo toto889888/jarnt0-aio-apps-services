@@ -21,6 +21,9 @@ import StopwatchTimer from './components/StopwatchTimer';
 import InternetSpeedTest from './components/InternetSpeedTest';
 import PDFTools from './components/PDFTools';
 import VoiceRecorder from './components/VoiceRecorder';
+import SpinWheelGame from './components/SpinWheelGame';
+import CoinFlipGame from './components/CoinFlipGame';
+import RockPaperScissorsGame from './components/RockPaperScissorsGame';
 
 const FEATURES = [
   { key: 'calculator', label: 'ເຄື່ອງຄິດໄລ່, ໂມງ ແລະ ໂມງປຸກ' },
@@ -44,6 +47,9 @@ const FEATURES = [
   { key: 'speedsync', label: 'ກວດສອບຄວາມໄວເນັດ' },
   { key: 'pdftools', label: 'ເຄື່ອງມື PDF' },
   { key: 'voicerecorder', label: 'ບັນທຶກສຽງ' },
+  { key: 'spinwheel', label: 'ເກມວົງລໍ້ສຸ່ມ' },
+  { key: 'coinflip', label: 'ເກມຫົວ-ກ້ອຍ' },
+  { key: 'rps', label: 'ເກມເປົ່າ-ຍິງ-ຊຸບ' },
 ];
 
 function App() {
@@ -96,6 +102,12 @@ function App() {
         return <PDFTools />;
       case 'voicerecorder':
         return <VoiceRecorder />;
+      case 'spinwheel':
+        return <SpinWheelGame />;
+      case 'coinflip':
+        return <CoinFlipGame />;
+      case 'rps':
+        return <RockPaperScissorsGame />;
       default:
         return <p>ຈະມາໃນໄວໆນີ້...</p>;
     }
